@@ -1,0 +1,530 @@
+1) @Controller vs @RestController
+
+@Controller
+-----------
+This annotation used to mark a class as Spring MVC Controller.
+It is used to handle web Request.
+It returns view(that contain Html Response with model value)
+
+@RestController
+--------------
+It is a combination of @Controller+@ResponseBody annotation
+it is used to handel Rest APi Request
+it Return JSON/XML response because Internal @ResponseBody annotation will serialize the method's return value to JSON
+
+note: the key difference is we no need to use @ResponseBody on each and every handler method once we annotated 
+the class with @RestController.
+
+Note:
+Difference between Web Application and REST Api
+------------------------------------------------
+.Generally the response of web application is view(HTML+CSS)because they are designed for human viewers
+.REST API Just returns data in the form of Json or XML because most of the REST clients are programers.
+
+
+2.What is purpose of the @SpringBootApplication annotation in SpringBootApplication?
+
+.The @SpringBootApplication is a Convenience annotation that combines three annotations in a Spring Boot application
+.It's used to annotate the main class of a Spring Boot application
+.@EnableAutoConfiguration: This enables Spring Boot's autoconfiguration mechanism.
+ Auto-configuration refers to creating the beans automatically by scanning the classath
+.@ComponentScan: This annotation tells Spring Boot to scan current package and its sub packages
+ in order to identify annotated classes and configure them as Spring beans
+.@Configuration: this annotation designates the class as a configuration class for java configuration
+
+
+3.How can you handle exceptions in  a springboot application?
+
+.In a Spring Boot application, we can handle exception using various approaches. here are some common techniques
+.Global Exception handling-@ControllerAdvice and @ExceptionHandler. you can create a
+ global exception handler by using the @ControllerAdvice annotation on a class. Inside this class, you can define methods
+ annotated with @ExceptionHandler to handle specific exceptions. These methods can provide custome logic for handling exceptions,
+ such as returning a specific HTTP response, redirecting to an error page, or logging the exception details
+.Custom Exception Handling: you can create custom exception classes by extending the RuntimeExcepttion or Exception class. 
+ These custom exceptions can contain additional information specific to your application's context. you can catch these
+ exceptions and handle them in the appropriate exception handlers.
+.Using try-catch blocks
+
+4.what is Profiles in springboot?
+
+.we have multiple environments like Stage,Production,Testing, UAT
+.so profiles will load properties based on environment
+.we can active current profile using  Spring.profiles.active=Dev(by passing at runtime)
+
+5.Using Lombok Annotations:
+
+Lombok provides several annotations that you can use in your classes to generate common code. 
+Some of the commonly used annotations include:
+
+@Data: Generates getters, setters, toString, equals, and hashCode methods.
+@Getter and @Setter: Generate getter and setter methods.
+@NoArgsConstructor and @AllArgsConstructor: Generate no-args and all-args constructors, respectively.
+@Builder: Generate a builder pattern for creating instance
+
+
+6.JPARepository vs CRUDREpositoy
+---------------------------------
+CRUDREpositoy
+--------------
+CrudRepository is an interface that provides basic CRUD (Create, Read, Update, Delete) operations for entities in a relational database.
+CrudRepository includes methods for performing operations like save(), findById(), findAll(), deleteById()
+
+
+JPARepository
+---------------
+JpaRepository includes methods for common CRUD operations (save(), findById(), findAll(), deleteById(), etc.),
+ as well as more advanced features like sorting, pagination, and support for custom queries through method names and @Query annotations.
+ 
+
+7.Spring Actuator and  its advantages
+-------------------------------------
+
+An actuator is an additional feature of Spring that helps you to monitor and manage your application 
+when you push it to production. These actuators include auditing, health, CPU usage, HTTP hits, 
+and metric gathering, and many more that are automatically applied to your application.
+
+(or)
+
+Spring Boot's 'Actuator' dependency is used to monitor and manage the Spring web application. 
+Actuator is mainly used to expose operational information about the running application — health, metrics, info, dump, env, etc. 
+We can use it to monitor and manage the application with the help of HTTP endpoints or with the JMX
+
+
+8.@Qualifier
+------------
+when you create more than one bean of the same type and want to wire only one of them with a property. 
+In such cases, you can use the @Qualifier annotation along with @Autowired to remove the confusion by providing which exact bean will be wired.
+
+@Configuration
+public class AppConfig {
+
+    @Bean
+    public DataSource dataSource1() {
+        return new DataSource1();
+    }
+	
+    @Bean
+    public DataSource dataSource2() {
+        return new DataSource2();
+    }
+}
+
+@Service
+public class MyService {
+    private final DataSource dataSource;
+
+    @Autowired
+    public MyService(@Qualifier("dataSource1") DataSource dataSource) {
+        this.dataSource = dataSource;
+    }
+
+    // ...
+}
+
+@Primary 
+---------
+The @Primary annotation is used to indicate a primary bean when there are multiple beans 
+of the same type available for injection
+
+@Configuration
+public class AppConfig {
+    @Bean
+	@Primary
+    public DataSource dataSource1() {
+        return new DataSource1();
+    }
+    @Bean
+    public DataSource dataSource2() {
+        return new DataSource2();
+    }
+}
+
+@Service
+public class MyService {
+    private final DataSource dataSource;
+
+    @Autowired
+    public MyService(DataSource dataSource) {
+        this.dataSource = dataSource; // This will inject DataSource1 because it's marked as @Primary
+    }
+//....
+}
+
+---------------------------------------------------------------------------------
+9) POST vs PUT
+   -----------
+
+POST (Create a Resource):
+
+POST is an HTTP method used to create a new resource on the server.
+POST is not idempotent,So when we execute the same POST request N times, we will have N new resources on the server
+Example:
+
+POST /api/users
+{
+  "name": "John Doe",
+  "email": "john.doe@example.com"
+}
+
+PUT (Update a Resource or Create If Not Exists)
+
+PUT is an HTTP method used to update an existing resource.
+PUT is idempotent,If you execute a PUT API N times, the very first request
+will update the resource; the other N-1 requests will just overwrite
+the same resource state again and again – 
+
+Example:
+
+PUT /api/users/123
+{
+  "name": "Updated Name",
+  "email": "updated.email@example.com"
+}
+--------------------------------------------------------------------------------------------------------------
+10) PUT vs PATCH
+
+PUT (Update the Entire Resource):
+
+PUT is an HTTP method used to update the entire resource at a specific URL.
+If the resource exists, the server will replace it with the data provided in the PUT request payload. 
+If the resource doesn't exist, it may be created.
+
+Example:
+PUT /api/users/123
+{
+  "name": "John Doe",
+  "email": "john.doe@example.com"
+}
+PATCH (Partial Update of a Resource):
+
+PATCH is an HTTP method used to partially update an existing resource at a specific URL. 
+With PATCH, you only need to send the data that you want to change, not the entire resource.
+The server will apply these changes to the existing resource.
+Example:
+
+PATCH /api/users/123
+{
+  "email": "new.email@example.com"
+}
+
+-----------------------------------------------------------------------
+11.What is the difference between RequestMapping and GetMapping?
+The @RequestMapping annotation is used to map the web request to its handler class or its handler method
+RequestMapping can be used with GET, POST, PUT, and many other request methods using the method attribute on the annotation.
+
+@RequestMapping(value = "/example", method = RequestMethod.GET)
+public String handleGetRequest() {
+    // ...
+}
+
+@GetMapping:
+A specialized annotation for mapping methods exclusively to HTTP GET requests.
+@GetMapping("/example")
+public String handleGetRequest() {
+    // ...
+}
+-------------------------------------------------
+12 HTTP status codes
+   ----------------
+
+200 ---ok                 - indicates success
+400 -- Bad request        - states that invalid input data is provided
+                            for ex: validation error, missing data.
+401 -- UnAuthorized       -- states that user is using invalid or wrong authentication token(login request failed)
+403 -- Forbidden          -- User not allowed to access Resource
+404 -- Not Found          - status that the method is not available(url is not exist)
+405 -- Method Not Allowed - Request Method is invalid
+500 -- Internal Server Error -- States that the server has thrown some exception while executing the method
+--------------------------------------------------------------------------------------------------------------------
+ 13)@Transactional 
+
+@Transactional in Spring is an annotation used to mark methods or classes as transactional.
+If the annotated method completes successfully, the transaction is committed, 
+persisting changes to the database. In case of an exception, the transaction is rolled back, undoing any changes
+-------------------------------------------------------------------------------------------------------------
+14) @PathVariable vs @RequestParam:
+    ------------------------------
+
+@PathVariable:
+-------------
+In Spring MVC, @PathVariable is used to extract values from the URI path of a request
+Example: If you have a URL like /users/{userId}, you can use @PathVariable to extract the value of {userId} from the URL.
+
+
+@RequestParam:
+-------------
+.@RequestParam is used to extract data from the query parameters of the request URL 
+.Query parameters are key-value pairs appended to the URL after a question mark (?).
+Example: If you have a URL like /search?query=example&limit=10, you can use @RequestParam to retrieve 
+ the values of query and limit from the query string
+----------------------------------------------------------------
+15)@RequestBody Vs ResponseBody
+
+@RequestBody:
+------------
+In Spring Boot, @RequestBody annotation used to handle HTTP request in RESTful web services or MVC controllers.
+It is used in the method parameter of a controller method to extract data from the request body and convert
+it into a Java object.
+
+Example:
+
+@PostMapping("/createPolicyDetails")
+public Integer createInsurencePolicyDetails(@RequestBody PolicyDto policyDto) {
+
+                return insurenceService.createPolicyDetails(policyDto);	
+}
+	
+ResponseBody:
+------------
+.In Spring Boot @ResponseBody annotation used to handle response bodies in RESTful web services or MVC controllers.
+.It is applied to the method within a controller, and it tells Spring to serialize the method's return value 
+ to JSON (or other formats) and include it in the HTTP response.
+
+Example:
+
+@GetMapping("/user/{id}")
+@ResponseBody
+public User getUser(@PathVariable Long id) {
+    User user = userService.getUserById(id);
+    return user; // Will be serialized to JSON and sent in the response body
+}
+
+(or)
+@RequestBody:
+------------
+@RequestBody is used for deserializing the request body into a Java object when processing incoming HTTP requests.
+
+ResponseBody:
+------------
+@ResponseBody is used for serializing the method's return value to the response body when sending HTTP responses.
+
+These annotations are commonly used in Spring Boot applications for building RESTful APIs or handling
+HTTP requests and responses in a more automated and structured manner.
+
+
+
+
+16)GetMapping Vs PostMapping
+   -------------------------
+
+GetMapping:
+----------
+HTTP Method: It is used to map HTTP GET requests to a specific controller method.
+Usage: Typically used for read-only operations or retrieving data from the server.
+
+@GetMapping("/users/{id}")
+public ResponseEntity<User> getUser(@PathVariable Long id) {
+    // Code to retrieve and return user data
+}
+
+PostMapping
+-----------
+HTTP Method: It is used to map HTTP POST requests to a specific controller method.
+Usage: Typically used for creating or submitting data to the server.
+
+@PostMapping("/users")
+public ResponseEntity<User> createUser(@RequestBody User user) {
+    // Code to create a new user
+}
+
+
+*****https://www.appsdeveloperblog.com/spring-core-annotations/ *****
+
+https://springframework.guru/spring-framework-annotations/
+
+17)What is Spring Boot?
+
+Spring Boot is an another approach to develop spring based applications with minimal configuration
+Spring Boot simplifies and accelerates the development of web applications and microservices.
+SpringBoot provides auto-configuration, and tools to minimize setup and boilerplate code,
+making it easier to build production-ready applications quickly
+SpringBoot offers embedded server such as Jetty,Tomcat, Etc.
+
+(or)
+
+Spring Boot is an another approach to develop spring based applications with minimal configuration
+spring Boot is mainly used to develope Rest APIs
+The primary feature of SpringBoot is AutoConfiguration. it automatically configures the classes based on the requirement.
+SpringBoot offers embedded server such as Jetty,Tomcat, Etc.
+
+
+18)difference between Spring and Spring Boot (or) benefits of using Spring Boot
+
+
+.Starter POMs        : It Simplifies Maven configurations in SpringBoot Appliaction.
+.Version management  : In SpringBoot we no need to Provide version numbers for dependency,Parent Stater will take care of all
+                       the chaild dependencies that we are configuring
+.Auto Configuration  :it automatically configures the classes based on the requirement.
+.Component Scanning  :SpringBoot Performs the component scaning to recognize the bean classes based on base package name
+.Embedded Server     : SpringBoot offers embedded server such as Jetty,Tomcat, Etc.
+.In Memory DB        :It provides support for the in-memory database such as H2
+.Actuators           :Spring Boot Actuators offer built-in endpoints for monitoring and managing your application 
+.DevTools            :allowing developers to make code changes and see the results without manual application restarts, 
+                      speeding up the development cycle
+
+19)default port number
+   ------------------
+   .The default port number for a Spring Boot application is 8080. 
+   
+   .in properties file
+        server.port=your_custom_port_number
+
+20)How to configure multiple databases in springboot
+
+  .Create separate configurations for each database, defining DataSources, EntityManagers, and TransactionManagers.
+  .Configure database properties for each database in application.properties or application.yml.
+  .Use @Qualifier annotation to specify which DataSource and EntityManager to inject.
+  .Annotate service methods with @Transactional and specify the corresponding TransactionManager.
+
+21)How to configure
+
+============================================================================================================================================================
+monolithic vs microservices
+-----------------------------
+Monolithic Architecture:
+Monolithic architecture involves building an application as a single, cohesive unit where all components are tightly integrated. 
+It's simpler to develop and deploy initially, but can become complex and harder to maintain as the application grows. 
+Scaling can be challenging, and it often uses a single technology stack.
+
+Microservices Architecture:
+Microservices architecture breaks down an application into smaller, loosely coupled services, each responsible for specific functionalities. 
+It offers flexibility in development, deployment, and scaling, making it suitable for larger and more complex projects. 
+
+Choosing Between Them:
+Choose monolithic architecture for simpler projects where ease of development is crucial. Opt for microservices when 
+dealing with complex projects that require scalability, independent development, and the ability to adapt to changing 
+requirements.
+
+short answer
+------------
+
+A monolithic application is built as a single unified unit while a microservices architecture is a collection of smaller,
+independently deployable services.
+
+
+need of spring cloud
+---------------------
+Spring Cloud is essential for developing and managing microservices-based applications in Java. It offers tools for service discovery,
+load balancing, circuit breaking, configuration management, API gateways, distributed tracing, security, event-driven architecture, 
+and monitoring. These tools simplify complexities, enhance reliability, and streamline development, making it easier to build and
+maintain robust distributed systems.
+
+
+Circute breaking:
+
+.Circuit breaking is a pattern that prevents cascading failure in microservices.
+(For example microservices1 connected with micro services 2  and ms2 connected with ms3 and so on. 
+ Suddenly ms2 is failed ms3 ms4 ms5 execution make it fail. So we should avoid executing of all those 
+ services from the failure point on words That is called circut braking.)
+.Circut breaking can be implemented Using the Netflix Hystrix library or Resillence4j(Hystrix is old library and Resillence4j is new library)
+.monitors the health of dependednt services and, if failure occur,opens the circut to stop sending requests.
+
+API GateWay:
+
+API Gateway: An API gateway (e.g., Netflix Zuul) acts as a single entry point for client requests. 
+It handles routing, load balancing, authentication, and other cross-cutting concerns, simplifying 
+client communication with the microservices.
+
+load balencing
+--------------
+.It will Distribute client requests across multiple instances of a service.
+.Spring cloud integrates with load balencers like netflix Ribbon/Cloud Load balancer
+.These are client side load balencing
+.Handle load distribution with out manual configuration
+
+Hystrix
+--------
+Hystrix is a library used in microservices architectures to implement the Circuit Breaker pattern,
+It monitors service health, provides fallback mechanisms, and helps prevent cascading failures by
+intelligently managing service requests and responses.
+
+eureka service registry need..
+-----------------------------
+Eureka is a service registry essential for microservices architectures. It enables services to dynamically 
+register themselves and allows others to discover and communicate with them. Eureka provides 
+load balancing,scalability, health checks, and high availability
+
+1.how can you handle Authentication in microservices?
+
+.Spring Cloud provides various mechanisams to handle security and authentication in microservices.
+.those are Spring Security,OAuth2,JSON Web Tokens(JWT).
+.These tools enable implementing authentication and authorization mechanisams, securing endpoints, and managing 
+ user roles and permissions across microservices. 
+ 
+ 
+.what is distribution tracing and how it is implemented in spring cloud?
+ 
+.It is a technique used to track and monitor requests as they flow through multiple microservices.
+.It is implemented through integration with tracing systems like Zipkin.
+.sleuth used for tracing information across microservices, transferred to Zipkin Server using Zipkin Client
+
+what are micro services?
+
+Microservices is an architecture where the application is exposed as loosely coupled services that can be
+independently developed,deployed and maintained.Each service exposed is reffered to as Microservices. 
+Each service performs a unique function.
+
+what is microservices architecture?
+
+.it is an architecture to develope complex appliactions.
+.these built as a collection of small,independent services.
+.these services communicate with each other through APIs.
+.it will enable moduler and decoupled systems.
+
+How microservices communicate with each other?
+
+HTTP/HTTPS: This is the most common and widely used method of communication between microservices. 
+Microservices expose HTTP/HTTPS-based APIs (often RESTful) that other services can call to request or send data. 
+JSON or XML is often used for data serialization.
+
+Message Queues: Microservices can communicate asynchronously via message queues or message brokers 
+such as Apache Kafka, RabbitMQ, or Amazon SQS. One microservice publishes a message to a queue, 
+and one or more microservices can subscribe to the queue to receive and process messages.
+
+
+What is synchronus and asynchronous in microservices
+----------------------------------------------------
+
+Synchronous: 
+.The most common type of synchronous communication is HTTP request
+.in this model one microservice(The client) sends a request to another microservice and wait for the response before processing.
+.Synchronous calls are blocking, meaning the caller is blocked until it receives a response.
+.This can lead to longer response times if a service is slow or unavailable.
+
+Asynchronous:
+.In this model the microservice(The client) does not wait for a response and just sends the request to a message broker. AMQP is an asynchronous protocol.
+.Asynchronouscalls are non-blocking. Microservices can continue processing other tasks while waiting for messages from the broker.
+.Asynchronouscommunication can improve scalability because microservices can handle multiple requests concurrently
+ without being blocked by waiting for responses.
+(or)
+syncronus com : At a time only one request(rest Template comunication comes under syn communication)
+asynco : mutliple requests at a time(rabitMQ,Kafka comes under asynchronus communication)
+
+
+Explain Solid principle:
+-----------------------
+Single Responsibility Principle (SRP):
+In microservices, each service should have a single responsibility or purpose, focusing on a specific business capability.
+
+Open/Closed Principle (OCP):Microservices should be open for extension  but closed for modification.
+
+Liskov Substitution Principle (LSP):
+objects of a superclass should be replaceable with objects of its subclasses without breaking the application
+
+Interface Segregation Principle (ISP):
+creation of smaller,more specific interfaces instread of large ones that cover multiple senarios.
+
+Dependency Inversion Principle (DIP):
+This principle encourages the use of interfaces and dependency injection to decouple modules and make them more reusable and testable.
+
+default port number:
+------------------
+Common Service Registries and Default Ports
+Eureka (Netflix OSS)
+
+Default port: 8761
+Configurable in the application.properties or application.yml
+
+server.port=8761
+
+

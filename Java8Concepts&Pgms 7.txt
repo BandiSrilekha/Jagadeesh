@@ -1,0 +1,412 @@
+lamda expressions
+-----------------
+1.Lambda Expression is just an anonymous(nameless) function. That means the function which doesn’t
+have the name,return type and access modifiers.
+Lambda Expression also known as anonymous functions.
+
+.with the help of lamda expression we can bring the functional programming in Java 8.
+
+2.Functional Interfaces:
+
+if an interface contain only one abstract method, such type of interfaces are called functional
+interfaces and the method is called functional method or single abstract method(SAM).
+
+1) Runnable  It contains only run() method
+2) Comparable  It contains only compareTo() method
+3) Comparator It contains only compare() method
+4) Callable  It contains only call()method
+
+inside functional interface in addition to single Abstract method(SAM) we write any number of
+default and static methods.
+
+//Interf i=(a,b)->System.out.println(a+b); FI with lamda expression
+
+.
+
+3)Default methods
+
+1. Until 1.7 version onwards inside interface we can take only public abstract methods and public static final variables
+   (every method present inside interface is always public and abstract weather we are declaring or not).
+3. But from 1.8 version onwards in addition to these, we can declare default concrete methods also inside interface,
+   which are also known as defender methods.
+4. We can declare default method with the keyword “default” as follows
+5. We can have any number of default method in an Interface.
+6..default methods present inside interface by default available to implemented classes
+
+Two interfaces can contain default method with same signature then there may be a chance of ambiguity problem
+(diamond problem) to the implementation class.to overcome this problem compulsory we should override default method 
+in the implementation class otherwise we get compiletime error.
+
+note: 
+.default mathods provide backword compactability,mean if you want to add any extra method in interface later it will 
+ effect implementation class so in that case we can use default methods in interface with out effecting chaild class 
+
+
+4)Static methods inside interface:
+
+.From 1.8version onwards in addition to default methods we can write static methods also inside interface to define utility functions.
+.Interface static methods by-default not available to the implementation classes,so overriding concept is not applicable here.
+.Based on our requirement we can define exactly same method in the implementation class,it’s valid but not overriding.
+.by using implementation class reference we can’t call interface static methods.
+
+note: 
+
+.static methods can now provide utility methods that are related to the interface's purpose 
+.static method don't depend on the state of any implementing class. 
+****These methods can be called directly on the interface, making them easily accessible****
+
+
+Intermediate operation
+---------------------
+Intermediate operations transform(map) or filter(filter) elements in a stream, returning a new stream. 
+Examples: filter, map, distinct, sorted, limit.
+
+Terminal operator
+----------------
+.A terminal operator is a final operation in a stream pipeline. It triggers the processing of 
+ stream elements and produces a result. Once applied, the stream cannot be further modified. 
+
+Examples: forEach, collect, reduce, count, min, max, anyMatch, allMatch, noneMatch,findFirst.
+
+(or)
+
+Intermediate operation
+---------------------
+.The operations which returns another stream as a result are called intermediate operations and they are lazy.
+
+terminal operator
+-----------------
+.The operations which returns non-stream values like primitive or object or Collection or return nothing are called terminal operations
+
+.you can chain multiple intermediate operations and none of them will do anything until you invoke a terminal operation.
+ At that time, all of the intermediate operations that you invoked earlier will be invoked along with the terminal operation
+
+
+Map()
+---
+map() applies a function to each element in a collection or stream and returns a new stream with 
+the same number of elements as the original.
+
+
+
+map
+--
+The map method is used to apply a function to each element of the stream and produce a new stream with the transformed elements.
+Each element is transformed independently, and the output stream has the same number of elements as the input stream.
+
+flatMap()
+----------
+flatMap() applies a function to each element in a collection or stream, and the function can produce multiple output 
+elements for each input element. It flattens these multiple outputs into a single stream.
+
+
+
+Optional in Java
+---------------
+
+Optional object is used to represent null with absent value. This class has various utility methods 
+to facilitate code to handle values as 'available' or 'not available' instead of checking null values
+
+EX:
+if (nonEmptyOpt.isPresent()) {
+    System.out.println("Value is present");
+}
+
+Optional<String> emptyOpt = Optional.empty();
+Optional<String> nonEmptyOpt = Optional.of("Hello");
+Optional<String> nullableOpt = Optional.ofNullable("Hello");
+
+
+V.forEach() method
+------------------
+this method will not return anything.
+this method will take lambda expression as argument and apply that lambda expression for each
+element present in the stream.
+Ex:
+l.stream().forEach(s->sop(s));
+l3.stream().forEach(System.out:: println);
+
+predicate
+---------
+
+A predicate is a function with a single argument and returns boolean value.
+To implement predicate functions in java,oracle people introduced Predicate interface in 1.8
+version(i.e.,Predicate<T>).
+Predicate interface present in java.util.function package.
+It’s a functional interface and it contains only one method i.e., test()
+
+Ex:
+interface Predicate<T> {
+public boolean test(T t);
+}
+As predicate is a functional interface and hence it can refers lambda expression
+
+
+Function
+--------
+Functions are exactly same as predicates except that functions can return any type of result but
+function should(can)return only one value and that value can be any type as per our requirement.
+To implement functions oracle people introduced Function interface in 1.8version.
+Function interface present in java.util.function package.
+Functional interface contains only one method i.e., apply()
+
+EX:
+interface function(T,R) {
+public R apply(T t);
+}
+
+Stream Vs Collection
+
+Collection
+-----------
+.if we want to represent a group of individual objects as a single entity then we should go for collection.
+
+Stream
+------
+.if we want to process a group of objects from the collection then we should go for streams.
+.we can create a stream object to the collection by using stream()method of Collection interface.
+.stream() method is a default method added to the Collection in 1.8 version.
+ default Stream stream()
+ Ex:  Stream s = c.stream();
+
+
+Method and references by using ::(double colon)operator
+------------------------------------------------------
+functionalInterface method can be mapped to our specified method by using :: (double
+colon)operator. This is called method reference.
+
+Our specified method can be either static method or instance method.
+FunctionalInterface method and our specified method should have same argument types ,except this
+the remaining things like returntype,methodname,modifiersetc are not required to match.
+
+Syntax:
+If our specified method is static method        If the method is instance method        
+Classname::methodName                           Objref::methodName
+
+FunctionalInterface can refer lambda expression and FunctionalInterface can also refer method
+reference . Hence lambda expression can be replaced with method reference.
+hence method reference is alternative syntax to lambda expression.
+
+
+note:
+
+consumer->takes single input returns no outpout
+predicate->takes single input returns boolean value
+function->takes single input returns single output
+suplier ->takes no argument returns some value
+
+.map() internally uses Function Interface
+.filter() internally uses Predicate Functional Interface
+--------------------------------------
+
+.The operations which returns another stream as a result are called intermediate operations
+.The operations which returns nothing are called terminal operations
+
+.map() applies a function to each element in a stream and returns a new stream
+.flatMap() applies a function to each element in a stream, and the function can produce multiple output 
+ elements for each input element
+
+.predicate->takes single input returns boolean value
+.function->takes single input returns single output
+
+.if we want to process a group of objects from the collection then we should go for streams.
+==============================================================================================================================================================
+
+
+package com.app;
+
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+public class TestSort {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		List<Integer> list1=Arrays.asList(10,17,21,19,57,34,71,86);
+		
+		//to print maximum value
+		//int max=list1.stream().max(Integer::compare).get();
+		//int max1=list1.stream().max((i1,i2)->i1.compareTo(i2)).get();
+		//int max2=list1.stream().max(Comparator.naturalOrder()).get();
+		//int max3=list1.stream().max(Integer::compareTo).get();
+		//int max4=list1.stream().sorted().max(Integer::compareTo).get();
+		//System.out.println(max4);
+		
+		//to print minimum value
+		//int min=list1.stream().min(Integer::compare).get();
+		//int min1=list1.stream().min((i1,i2)->i1.compareTo(i2)).get();
+		//int min2=list1.stream().min(Comparator.naturalOrder()).get();
+		//int min3=list1.stream().max(Comparator.reverseOrder()).get();
+		//System.out.println(min2);
+		
+		//sorting in assending order
+		//list1.stream().sorted().forEach(System.out::println);
+		//list1.stream().sorted((i1,i2)->i1.compareTo(i2)).forEach(System.out::println);
+		
+		//sorting in desending order
+		//list1.stream().sorted(Collections.reverseOrder()).forEach(System.out::println);
+		//list1.stream().sorted((i1,i2)->i2.compareTo(i1)).forEach(System.out::println);
+			
+                //Second highest number 
+		// int secondhighestnum = list1.stream().sorted(Comparator.reverseOrder()).skip(1).findFirst().get();
+		//  System.out.println(secondhighestnum);
+        
+
+	}
+
+}
+=================================================================================
+package com.app;
+
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
+
+public class TestInteger {
+	
+	public static void main(String[] args) {
+		
+		List<Integer> list=Arrays.asList(3,4,10,15,17,78,54,31,33,78,17);
+	        //display even
+		//list.stream().filter(i->i%2==0).forEach(e->System.out.println(e));
+		//list.stream().filter(i->i%2==0).forEach(System.out::println);
+		//List<Integer> l1=list.stream().filter(i->i%2==0).collect(Collectors.toList());
+		//System.out.println(l1);
+		
+		 //find all numbers starts with 3
+		//list.stream().filter(s->s.toString().startsWith("3")).forEach(System.out::println);  
+		//list.stream().map(s->s+"").filter(e->e.startsWith("3")).forEach(System.out::println);
+		
+	        //finding the duplicate in an array
+		//Set<Integer> set=new HashSet<>();
+		//list.stream().filter(s->!set.add(s)).forEach(System.out::println);
+		
+		//aviod duplicates
+		//list.stream().filter(s->set.add(s)).forEach(System.out::println);
+		//list.stream().distinct().forEach(System.out::println);
+		
+		//count duplicates
+		//long duplicateCount=list.stream().filter(s->!set.add(s)).count();
+		//System.out.println(duplicateCount);
+		
+		//multiply each number with 2 which are grater than 5
+		//list.stream().filter(j->j<5).map(i->i*2).forEach(e->System.out.print(e+" "));
+		
+		//to find first element
+		//System.out.println(list.stream().findFirst().get());
+                
+                //total number of elements 
+                //System.out.println(list.stream().count());
+		
+		
+	}
+}
+==================================================================================
+package com.app;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+
+public class TestString {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		
+		 //toUpperCase
+		//List<String> stringList=Arrays.asList("hari","mahesh","varun","harikrishna","siva");
+		//StringList2.stream().map(s->s.toUpperCase()).forEach(System.out::println);
+		//List<String> l=stringList.stream().map(s->s.toUpperCase()).collect(Collectors.toList());
+		//System.out.println(l);
+		
+                //print the strings whose length is 5
+		//long count=stringList.stream().filter(s ->s.length()==5).count();
+		//System.out.println(count);
+		
+                //String concat using java 8
+		//List<String> strings = Arrays.asList("Hello", "Java", "8", "Streams");
+		//String concatenated = strings.stream().collect(Collectors.joining(", "));
+		//System.out.println(concatenated);
+
+                //Each String count in String Array
+                //List<String> s= Arrays.asList("james","salena","james");
+                //Map<String, Long> map= s.stream().collect(Collectors.groupingBy(Function.identity(),Collectors.counting()));
+                //System.out.println(map);
+
+		
+		//occurence of each character
+		// String str="capgemini";
+		// Map<String, Long> result = str.chars().mapToObj(i -> (char) i)
+		//.collect(Collectors.groupingBy(Object::toString, Collectors.counting()));
+		//System.out.println(result);
+		 
+		
+		//count the duplicates in char array
+		//List<Character> list2 = Arrays.asList('A','B','c','A','B','c','A','B','c','d','A');
+		//list2.stream().collect(Collectors.groupingBy(e->e,Collectors.counting()))
+		//.entrySet().stream().map(a->a.getKey()+".."+a.getValue()).forEach(System.out::println);
+
+                 String input = "swiss";
+        Character re = input.chars().mapToObj(c -> (char) c).collect(LinkedHashMap::new, (map, c) -> map.put(c, map.getOrDefault(c, 0L) + 1),Map::putAll)
+                .entrySet().stream()
+                .filter(e -> e.getValue() == 1)
+                .map(Map.Entry::getKey)
+                .findFirst()
+                .orElse(null);
+
+        System.out.println(result != null ? "First non-repeated character: " + result : "No non-repeated character found.");
+
+	}
+
+}
+===================================================================
+package com.app;
+
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.Period;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+public class Ramdom {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		
+		//date time and age
+		
+		 LocalDate date=LocalDate.now(); System.out.println(date);
+		 LocalTime time=LocalTime.now(); System.out.println(time);
+		 LocalDate birthday=LocalDate.of(1998,01,01); Period p=Period.between(date,
+		  birthday); System.out.println("age:"+p);
+	
+		
+		//concat two streams
+		
+		  Stream<Integer> stream1 = Stream.of(1, 2, 3);  Stream<Integer> stream2 = Stream.of(4, 5, 6);
+		  Stream<Integer> mergedStream = Stream.concat(stream1, stream2);
+		  System.out.println( mergedStream.collect(Collectors.toList() ));
+
+                  List<Integer> list=Arrays.asList(10,15,17,21);  List<Integer> list2=Arrays.asList(10,15,14,31);         
+                  Stream  concadStream=Stream.concat(list.stream(),list2.stream());
+                  concadStream.forEach(System.out::println);
+		 
+                  // Use Java 8 Streams to find the non-repeated number
+                 List<Integer> numbers = Arrays.asList(1, 2, 3, 2, 1, 4, 5, 4, 6);
+                 List<Integer> nonRepeatedNumbers = numbers.stream().filter(number -> numbers.indexOf(number) ==
+                 numbers.lastIndexOf(number)).collect(Collectors.toList());
+                 System.out.println("Non-repeated numbers: " + nonRepeatedNumbers);
+
+	}
+
+}

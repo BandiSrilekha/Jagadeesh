@@ -1,0 +1,1085 @@
+1)comparable vs comparator?
+
+COMPARABLE:
+----------
+ • If we want default natural sorting order then we should go for Comparable Interface
+ • Comparable interface present in java.lang package
+ • Comparable Interface contains compareTo() method
+ • All wrapper classes and String class by default implements Comparable interface
+COMPARATOR:
+----------
+ • If we want customised sorting order then we should go for Comparator Interface
+ • Comparator interface present in java.util package 
+ • Comparator Interface contains compare() and equals() method
+ • By default only few classes like Colator,RuleBasedColator implements Comparator
+
+
+3)what is singleton
+
+SINGLETON CLASS OR SINGLETON DESIGN PATTERN:
+-------------------------------------------
+ •For any java class if we are allowed to create only one object such type class is called singleton class like
+  ActionServlet class,ServiceLocator etc
+ 
+ •In our Program if any object required repetedly then it is not recomended to create seperate obj for every requirement
+ •It reduces memory utilization and creates perfomance problems
+ •Instead of creating seperate object every time we can create only one object and we can reuse the same object for every 
+  similar requirement
+ •so that perfomance and memory utilization will be improved
+ •To create our own singleton classes we have to use private static variable,private constructor and factory method     
+ 
+
+4)what is failfast and failsafe?
+
+FAILFAST:
+--------
+  •while one thread iterating collection if the other threads trying to modify collection then if iterator fails by rising
+   ConcurentModificationException then it called failfast(iterator)
+  •example for failfast(iterator) is any traditional collection like ArrayList,Vector etc 
+
+FAILSAFE:
+--------
+  •while one thread is iterating collection if other threads are allowed to modify underlying collection in safe manner      
+  then it is called failsafe(iterator)
+  •in this case we wont get ConcurentModificationException.
+  •example for failsafe is any ConcurentCollection like CopyOnWriteArrayList,CopyOnWriteArraySet,ConcurentHashMap
+
+5)what is overriding&overloding?they belongs to which oops principle?
+
+OVERLOADING:
+-----------
+ •if two methods have same name but different argument types then it is called overloading
+ •in overloading method resolution always takes care by compliler based on reference type but not based on runtime          
+ object,so overloading also called as compile time polymarphism or static polymarphism or early binding 
+ •The main advantage of overloading is we can achieve the flexibility
+ •overloading can be possible in same class and chaild classes also
+ 
+OVERRIDING:
+-----------
+ •if two methods have same name,same argument types,same return types and different implementations in parent and chaild    
+ classes then it is called overridding but from 1.5 version onwords chaild class method return type need not be same as    
+  parent return type,its chaild types also allowed
+ •in overriding method resolution always takes care by jvm based on runtime object,so overriding also called as runtime
+  polymarphism,dynamic polymarphism or late binding
+ •The main advantage of overriding is we can achieve the flexibility   
+ •overriding can not posssible in same class,it is possible in chaild classes only
+ •in overiding we can increase the scope of a modifier but we can't decrese the scope of modifier
+ 
+ •overriding and overloading both are belongs to polymarphism which is one of the oops principle
+
+POLYMARPHISM:
+------------
+ •one name but multiple forms is called polymarphism
+ •overriding and overloading are the best examples for polymarphism
+ •the main advantage of polymarphism is we can achieve the flexibility
+
+6)why string is immutabe?
+
+  .in the case of string because of scp a single object can be referenced by multiple references,by using one reference
+   if we are allowed to change the content in the existing object then remaining references will be effected to overcome      
+    this problem sun people implemented string objects as immutable,according to this once we create a string object we      
+  cant perfome any changes in the existing object,if we are trying to perfome any changes with those changes a new object 
+   will be created
+
+
+7)what is the difference b/n StringBuffer and StringBuilder?
+
+StringBuffer  :Every method in StringBuffer is synchronised,
+                SB object is thread safe because SB object can be accessed by only one thread at a time,
+                Threads are required to wait to operate on StringBuffer objects and hance relately perfomance is low
+                Introdused in 1.0 version
+ StringBuilder:No method is synchronised,
+               SB object is not thread safe because SB object can be accessed by multiple threads simultaneously,
+               Threads are not required to wait to operate on StringBuilder object and  hance relatively perfomnce is high
+               Introdused in 1.5 version
+
+8)what is serialization?
+
+SERIALIZALITATION: the process of writing state of an object to a file is called serialization.but strictly speaking it                    
+                   is the process of converting  an object from java supported form to eigther file or n/w supportedform,
+                   by using FileOutputStream,ObjectOutputStream classes we can achieve serialization
+
+9)write the code for serialization of an object?
+
+  FileOutputStream fos=new FileOutstream(abc.txt);
+  ObjectOutputStream oos=new ObjectOutputStream(fos);
+  oos.writeObject(d);
+
+  // Deserialize the object
+  FileInputStream fis = new FileInputStream("abc.txt");
+  ObjectInputStream ois = new ObjectInputStream(fis);
+  Object obj = ois.readObject();
+
+10)when we should go for synchronised method and synchronised block?
+
+ if very few lines of code required synchronisation then it is not recomended to declere  entire method as synchronised
+  we have to enclose those few lines of code  by using synchronized block,if all lines of code with in a method required 
+  synchronization then we should declere that method with synchronized keyword
+
+
+12)What is abstract class?(cj)
+
+ABSTRACT CLASS:if we are talking about implementation but not completely then we should go for abstract class
+              .every method present inside abstract class need not be public and abstract we can take concrete methods also
+              .for abstract class we can't create object directly
+              .but inside abstract class we can take static,instance blocks and constructor also
+
+
+15)types of exceptions?
+
+TYPES OF EXCEPTIONS:
+-------------------  
+   •Exceptions are two types
+   •one is checked exception and another one is un-checked exception 
+
+   •The exceptions which are checked by the compiler (for smooth execution of the program at runtime) 
+    are called checked exception
+    for ex:FileNotFoundexception,InterruptedException,ServletException are belongs to checked exceptions
+   •The Exceptions which are not checked by the compiler are called un-checked exceptions
+    for ex:ArithematicException,NullPointerException,StackOverFlowError,OutOfMemoryError
+   •RuntimeException and its chaild classes,errors and its chaild classes are un-checked exceptions and all remaining
+    are checked exceptions
+   
+   •checked exceptions can be handled by eigther by try-catch or throws keyword.
+   •unchecked exceptions can be handled by try-catch only but we can not handled by using throws keyword,if we handle also     
+   there is no impact
+   
+   •checked exceptions are mandatary to handle
+   •unchecked exceptions are optional to handle
+
+                                         Throwable(checked p)
+					   	  |
+		           -------------------------------------------------------------------------
+			   |                                                                       |                 
+			Exception(Checked p)                                                    Error(Unchecked)
+		           |                                                                                                                                   
+	     ---------------------------------------------------------------------------------------------------
+             |                                  |                           |                                  |
+	RuntimeException(unchecked)       IOException(Checked)    FileNotFoundException(Checked)      SqlException(checked)
+	     |
+	     |-->ArithamaticException
+	     |-->NullPointerException
+	     |-->IndexOutOfBoundsException
+
+Note:
+.while creating custom exception better to extend with unchecked exception(Runtime Exception) which is not manadatary to handle
+.Throwable and exception all are classes
+.checked exception-> compiler will force you to handle exception(eigher by try catch or throws)  extends by exception
+.unchecked exception-> compiler will not force you to handle exception
+
+16)difeerences between ArrayList vs LinkedList?
+
+ArrayList:
+---------
+ • The underlying data structure for ArrayList is Resizable Array or Growable Array
+ • ArrayList by default implements Serializable,Clonable and RandomAccess interface also
+ • if our frequent operation is retrevable operation then best suitable data strecture is ArrayList
+ • if our frequent operationis Insertion or deletion operation in the middle then ArrayList is worst choice,because it        
+   required several shift operations
+
+LinkedList:
+----------
+ • The underlying data structor for LinkedList is DoubleLinkedList 
+ • LinkedList by default implements Serializable,Clonable only but not RandomAccess interface 
+ • LinkedList is worst choice if our frequent operation is retreval
+ • LinkedList is best suitable if our frequent opertion insertion or deletion in the middle
+
+17)internal working of hashmap?
+
+INTERNAL WORKING OF HashMap:
+---------------------------
+ •HashMap works on the principal of hashing.
+ •HashMap uses the hashCode() method to calculate a hash value. Hash value is calculated using the key object. This hash 
+  value is used to find the correct bucket where Entry object will be stored.
+// •HashMap uses the equals() method to find the correct key whose value is to be retrieved in case of get() and to find if    
+  that key already exists or not in case of put().//
+ •(Hashing collision means)more than one key having the same hash value, in that case Entry objects are stored as a          
+  linked-list with in a same bucket.
+ •With in a bucket values are stored as Entry objects which contain both key and value.
+ •In Java 8 hash elements use balanced trees instead of linked lists after a certain threshold is reached while storing      
+  values
+
+18)what is interface?
+
+INTERFACE:
+----------
+ •Any service requirement specification is considered as Interface
+ •From the client point of view an interface defines the set of services what is expecting
+ •From the service provider point of view an interface defines the set of services what is offering
+ •So an interface considered as contract b/n client and service providers
+ •100% pure abstract class is nothing but an interface
+ •If we dont know any thing about implementation just we have requirement specification then we should go for interface
+ •Every method present inside interface is by default public&abstract
+ •By default every variable present inside interface is public,static,final wheather we are declered or not
+ •For the interface variables compulsary we should perform initialization at the time of decleration only
+ •Inside interface we can't take instance and static blocks
+ •Inside interface we can't take constructor
+  ex:Real time example for interface is by using bank atm,gui screen bank people will highlate the set of services what         
+ they are offering,at the same time the same screen describes the set of services what end-user is expecting,So this 
+     GUI screen acts as contract between bank peoples&customers
+ •With in the interface we can,t write any implementation because it has to highlight just the set of services what we are   
+  offering or what you are expecting,so every method present inside interface should be abstract.due to this considered as 
+  100% pure abstract class
+ •The main advantage of interfaces are 
+   .We can acheive security because we are not highlating our internal implementation
+   .Enhancement will become very easy,because with out effecting outside person we can change our implementation.
+   .Two different systems can communicate via interface 
+
+19)what is static method and static block? 
+
+STATIC BLOCK:
+------------
+.A static block, or a static initializer, is a section of code which is run when the class is loaded. You can initialize  
+ static variables in a static block, so that when class is first loaded, all of the static (or shared) variables are  
+ properly initialized.
+.Static block is mostly used for changing the default values of static variables.This block gets executed when the class   
+ is loaded in the memory.
+.A class can have multiple Static blocks, which will execute in the same sequence in which they have been written into 
+ the program.
+                        (or)
+STATIC BLOCK:
+------------
+.At the time of class loading if we want to perform any activity we have to define that activity inside static 
+ blick because because static blocks will be executed at the time of class loading
+.with in a class we can take any no.of static blocks but all these static blocks will be executed from top to bottom
+ex:
+--
+.After loading JDBC driver class we have to register driver class we have to register driver with driver manager but every  
+driver class contains a static block to perform this activity at the time of driver class loading automatically we are  
+ not responsible to perform register explicitly
+ ex:
+     class Driver{
+       static {
+          Register this Driver with DM
+       }
+     }     
+
+STATIC METHOD:
+-------------
+Static Methods can access class variables without using object of the class. It can access non-static methods and non-static 
+variables by using objects. Static methods can be accessed directly in static and non-static methods.
+
+static variables vs instance variables
+--------------------------------------
+//instance variables  belong to the object level
+//static variables belong to the class and are shared by all the objects of the class.
+
+20)what is finally block?
+
+FINALLY BLOCK:
+-------------
+ •Generally it is never recomended to define clean-up code with in the try block because there is no garenty for the             
+ excecution  of every statement 
+ •and also it is never recomended to define clean-up code with in the catch block,because it won't be executed if there is   
+  no exception
+ •so we required to place to maintain clean-up code which should be executed always irrespective of wheather exception      
+  rised or not rised and wheather handled or not handled,such type of place is nothing but finally-block
+ •so the main purpose of finally block is to maintain clean-up clode which should be executed always 
+
+21)transient keyword in java?
+
+transient:
+---------
+.Transient is a modifier applicable only for variables.
+.at the time of serialization if we dont want to save the value of a perticular variable to meet sequrity constraint then 
+ we should declere that variable as transient.at the time of serialization jvm ignores original value of transient variables 
+ and save default value to the file.hance transient means not to serialize
+
+22)what is immutability?
+
+immutability:Immutable class is a class which once created, it’s contents can not be changed. Immutable objects are the                 
+objects whose state can not be changed once constructed. e.g. String class
+To create an immutable class following steps should be followed:
+.Create a final class.
+.Set the values of properties using constructor only.
+.Make the properties of the class final and private
+.Do not provide any setters for these properties.
+.If the instance fields include references to mutable objects, don't allow those objects to be changed:
+               .Don't provide methods that modify the mutable objects.
+               .Don't share references to the mutable objects. Never store references to external, mutable objects passed                  
+to the constructor; if necessary, create copies, and store references to the copies. Similarly, create                     
+copies of your internal mutable objects when necessary to avoid returning the originals in your methods.
+
+23)what are immutable classes in java?
+
+immutable classes:
+-----------------
+.All wrapper classes in java.lang are immutable – 
+ ex:String, Integer, Boolean, Character, Byte, Short, Long, Float, Double, BigDecimal, BigInteger
+
+24)what is difference between equals() method and == operator?
+
+'=='operator:
+-----------
+.it is an operator applicable for both primitives and object types
+.in the case of object references '==' operator ment for reference comparision
+.we can't override '==' for content comparision
+.to use '=='operator compulsary there should be some relation between argument types.otherwise we will get compile 
+ time error
+
+
+.equals():
+---------
+.it is a method applicable only for object types.but not for primitives
+.by default .equals() method present in object class also ment for reference comparision
+.we can override .equals() method for content comparision
+.if there is no relation between argument types then we wont get any compile time or run time errors& equals() 
+ method simply 
+
+26)what is abstraction and encapsulation?
+
+ABSTRACTION:
+-----------
+.Hiding internal implementation details and just highlate the set of services what we are offering is called Abstraction
+ex:
+.By Bank ATM machine,Bank people will highlate the set of services what they are offering without highlating internal 
+ implementation,this concept is nothing but Abstraction
+.By using interfaces&abstract classes we can achive abstraction
+.The main advantage of abstraction are
+ 1.we can achive security as no one is allowed to know our internal implementation
+ 2.with out effecting out side person we can change our internal implementation hance enhancement will become very easy. 
+.The main disadvantage of encapsulation is it increases the length of the code and shows down execution.
+
+ENCAPSULATION:
+-------------
+.encapsulating data and corresponding methods into a single module is called encapsulation.
+.if any java class follows data hiding and abstraction such type of class is said to be encapsulated class
+  Encapsulation=DataHiding+Abstraction
+.hiding the data behind the methods is the centralized concept of encaptulation
+.the main adavntage of encapsulation are 
+ 1.achieve security
+
+
+
+28)what is difference between HashMap and ConcurrentHashMap?
+
+HashMap
+-------
+1.It is not Thread safe
+2.Relatively perfomance is high because threads are not required to wait to operate on HashMap
+3.While one thread iterating HashMap the other threads are not allowed to modify map objects otherwise we will get runtime
+  exception saying ConcurrentModificationException
+4.Iterator of HashMap is Fail-Fast and it throws ConcurrentModificationException
+5.Null is allowed for both keys and values
+6.Introduced in 1.2 version  
+
+ConcurrentHashMap:
+-----------------
+1.It is Thread safe
+2.Relatively perfomance is low because some times threads are required to wait to operate on ConcurrentHashMap
+3.while one thread is iterating ConcurrentHashMap the other threads are allowed to modify Map objects in safe manner and
+  it won't throw ConcurrentModificationException
+4.Iterator of ConcurrentHashMap is Fail-Safe and it won't throws ConcurrentModificationException
+5.Null is not allowed for both keys and values otherwise we will get NullPointerExcetpion
+6.Introduced in 1.5 version
+
+Short note on ConcurrentHashMap:
+-------------------------------
+1.Underlying data strecture is HashTable
+2.ConcurrentHashMap allows concurrent read and thread safe update operations
+3.To perform read operation thread won't required any lock.But to perform upadate operation thread requires lock but it is   
+the lock of only a particular part of map(Bucket leval lock)
+4.Instead of whole Map Concurrent update achieved by internally deviding map into smaller portion which is defined 
+  by concurrency level
+5.The default Concurrency level is 16
+6.That is ConcurrentHashMap allows simultaneous Read operation and simultaneously 16 write(upadte) operations
+7.null is not allowed for both keys and vales
+8.while one thread iterating the other thread can perform update operation and ConcurrentHashMap never throws CMException
+
+29)difference between HashTabele and HashMap?
+
+HashMap AND HashTable DIFFERENCE:
+--------------------------------
+
+*----------------------------------------------------------------------------------*
+|              HashMap                   |         HashTable                       |
+|-----------------------------------------------------------------------------------
+|.No method in HashMap is synchronized   |.Every method in HashTbl is synchronized |
+|----------------------------------------|-----------------------------------------|
+|.At a time multiple threads are allowed |.At a time only one thread is allowed to |
+| to operate on HashMap object and hance | operate on HashTable and hance HashTabel|
+| and Hance HashMap is not Thread safe   | object is thread safe                   |
+|----------------------------------------|-----------------------------------------|
+|.Threads are not required to wait to    |.Threads are required to wait to operate |
+| operate on HashMap object and hance    | on HashTable and Hance relatively       |
+| relatively perfomance is high          | perfomance is low                       |
+|----------------------------------------|-----------------------------------------|
+|.Null is allowed for both key and values|.Null is not allowed for both key and    |
+|                                        | values otherwise we will get NPE        |
+|----------------------------------------|-----------------------------------------|
+|.Introduced in 1.2 version              |.Introduced in 1.0 version               |
+*----------------------------------------------------------------------------------*
+
+30)what is difference between abstract class and interface?
+
+INTERFACE AND ABSTRACT CLASS DIFFRERENCE:
+-----------------------------------------
+
+*--------------------------------------------------------------------------------------------------*
+|               INTERFACE                           |            ABSTRACT CLASS                    |
+|--------------------------------------------------------------------------------------------------|
+|.If we dont know any thing about implementation    |.If we are talking about implementation but   |
+| just we have requirement specficitation then      | not completely(partial implementation) then  |
+| we should go for interface                        | we should go for abstract class              |
+|---------------------------------------------------|----------------------------------------------|
+|.Every method present inside interface is by       |.Every method present inside abstarct class   |
+| default public & abstract                         | need not be public & abstract,we can take    | 
+|                                                   | concrete methods also                        |
+|---------------------------------------------------|----------------------------------------------|          
+|.The modifiers which are not alowed for intrface   |.There are no restrictions for abstract class |                      
+| methods are strictfp,protected,static,native,     | method modifier i.e we can use any modifier  |  
+| privete,final,synchronized                        |                                              |
+|---------------------------------------------------|----------------------------------------------|
+|.Every variable present inside intrface is public  |.abstract class variables need not be public, | 
+| static final by default weather we are declere    | final,static                                 |
+| or not                                            |                                              |
+|---------------------------------------------------|----------------------------------------------|
+|.The modifiers which are not declered for interface|.There are no restriction for abstract class  |
+| variables are private,protected,transient,volatile| variable modifiers                           |
+|---------------------------------------------------|----------------------------------------------|
+|.For the interface variables compulsary we sholud  |.For the abstract class variables there is no |
+| perform initialization at time of declartion only | restriction like performing initialization   |
+|                                                   | at the time of declaration                   |
+|---------------------------------------------------|----------------------------------------------|
+|.Inside interface we cant take instance,static     |.Inside abstarct class we can take static     |
+| blocks                                            | block,instance blocks                        |
+|---------------------------------------------------|----------------------------------------------|
+
+32)what are object class methods?
+
+Object CLASS METHODS:
+--------------------
+1)public String toString()
+`2)public native int hashCode()
+3)public boolean equals(Object o)
+4)protected native Object clone()throws CloneNotSupportedException
+5)public void finalize()throws Throwable
+6)public final Class getClass()
+7)public final void wait()throws InterruptedException
+8)public final void wait(long ms)throws InterruptedException
+9)public final void wait(long ms,int ns)throws InterruptedException
+10)public native final void notify()
+11)public native final void notifyAll()
+12)private static native void registerNatives() 
+
+
+34)yeild() ,join(),sleep() method:
+   ------------------------------
+
+yeild():
+-------
+.yeild() method causes to pause current executing thread to give the chance to the weightingthreads of same priority
+.If all weigthing threads can have low priority or if there are no waiting threads then same thread will be continued 
+ for the execution
+.If a thread calls yeild() method then which waiting thread will get a chance we cant except.it depends on 
+ Thread Scheduler 
+
+join():
+------
+.if a method wants to wait untill completing some other thread then we should go for join() method
+.for ex if a thread t1 wants to weight untill completing t2 thread then t1 thread has to call join method on t2 object
+ like t2.join()
+.Then immediatly t1 will be entered into weighting state.once t2 completes then only t1 will continue its execution
+
+
+sleep():
+-------
+.If a thread dont want to perform any operation for a perticular amount of time.then we should go for sleep() method
+.Every sleep() method throws InterruptedException which is checked exception,hance when ever we are using sleep() method
+ compulsary we should handle InterruptedException eigther by try-catch or throws keyword,otherwise we will get compile
+ time error 
+
+
+14)what is ArrayList?
+
+ArrayList:
+---------
+   •ArrayList is chaild class of List interface 
+   •The underlying data strecture of ArrayList is resizable array or growable array
+   •If we want group of objects as a single entity where insertion order is preserved and duplicates are  
+    allowed then we should go for ArrayList
+   •Heterogeneous objects are allowed in ArrayList
+   •Here null insertion is possible 
+   •By default ArrayList implements Serializable,clonable interfaces
+   •ArrayList implements RandomAccess interface also,so we can access any random element with same speed
+   •Hance ArrayList is the best choice if our frequent operation is retreval operation 
+
+36)write a short note on HashSet and TreeSet?
+HashSet:
+-------
+->underlying datastrecture for HashSet is HashTable
+->duplicates are not allowed,if we are trying to insert duplicates we wont get any compile time error,runtime errorand 
+  add method simply returns false
+->Insertion order is not preserved and it is based on Hash code of objs
+->heterogeneous objs are alowed 
+->null insertion is possible
+->implements serializabe,cloneable but not random access interface
+->best choice if our frequent operation is "search" operation
+->HashSet hs=new HashSet()->creates an empty HashSet object with default initial capacity 16 and defaut fill ratio is 0.75
+
+TreeSet:
+-------
+->underlying data strecture is balenced tree
+->duplicate objects are not allowed
+->insertion order is not preserved and it is based on some sorting order
+->heterogeneous objects are not allowed,otherwise we will get ClassCastException
+->null insertion is possibe(only once),
+->implements serializabe,cloneable interfaces but not random access interfaces
+->Treeset ts=new TreeSet();->create an empty TreeSet where elements will be inserted according to default natural sorting order
+->TreeSet ts=new TreeSet(Comparator c);->creates an empty TreeSet object where elements will be inserted according to
+  customized sorting order
+
+Null Acceptance:
+---------------
+->For non-empty tree set if we are trying to insert null then we will get NullPointerException
+->For Empty as the first element null is alowed but after inserting that entry if we are trying to insert any other entry
+  then we will get NullPointerException
+->but from 1.7 version onwords null is not alowed even as first element to empty TreeSet
+
+
+36)java 8 new features:
+  -------------------
+ •lambda expressions
+ •default methods in interfaces
+ •functional interfaces
+ •parallel operations
+ •principle and streams
+ •date and time api
+ •double colon operator(::)
+ •type annotations
+ •predicates
+ •functions
+ •predict object
+
+java 7 new features?
+
+JAVA7 FEATURES:
+---------------
+ •String in switch statement
+ •Try with multiple catch blocks
+ •Binary Literals
+ •Underscore in Numeric literals
+ •Diamond syntax
+ •Support for dynamic language
+ •Arithamatic null handling
+ •Automatic Resource Management
+ •Type reference for generic instance creation
+
+
+37)Exception:
+----------
+•When unexpected,unwanted event that distrubs the normal flow of the program is called Exception.
+ Ex:SleepingException(user defined exception),TyrePunchredExceptionException(user defined exception),
+   ArithamaticException(UnCheckedException),FileNotFoundException(CheckedException).
+•It is Highly Recomended to handle exceptions.The main objective of exception handling is "Gracefull(normal)
+ termination of the program".
+•Exception Handling doenot mean repairing exception,we have to define alternative way to continue rest of the program
+ This is nothing but "exception handling".
+
+
+-------------------------------------------------------------------------------------------------------------
+38)JDK vs JRE vs JVM
+----
+JDK provides enveronment to developement and run java applications
+JRE Just to run java applications,Ex: in client mechine we just run the developed program,at that time we need JRE
+JVM is responible to run java program line by line
+
+jdk=jre+tools
+jre=jvm+libraries
+
+
+39) Notify() and NotifyAll()
+--------------------------
+
+The notify() and notifyAll() methods with wait() methods are used for communication between the threads. 
+A thread that goes into waiting for state by calling the wait() method will be in waiting for the state 
+until any other thread calls either notify() or notifyAll() method on the same object. 
+
+
+The thread class notify() method is used to wake up a single thread.
+notifyAll(): The notifyAll() wakes up all threads that are waiting on this object’s monitor. 
+
+40)Super and This keywords 
+
+super(),this()
+--------------
+1.These are super and current class constructor calls
+2.we should use only in constructors
+
+super,this
+---------
+1.these are keywords to refer super and current class instance members
+2.we can use anywhere except in static area
+
+
+41)
+****case1****(Important)
+------------
+String s=new String("java");
+heap           scp
+s->java        java
+
+String s1="java";
+ Heap              scp
+                  s1-->java
+
+case2(not important)
+-----
+String s1=new String("java");    heap                   scp 
+String s2=new String("java");    s1-->java             java 
+                                 s2-->java                
+
+String s3="java";                heap                  scp 
+String s4="java";                s1-->java         s3-->java<---s4
+                                 s2-->java
+case3
+-----
+String s=new String("java");      heap                   scp
+         s.concat("oracle");      s--java                java
+                                  javaoracle             oracle
+
+SBuffer sb=new SBuffer("java");   heap                   scp--
+sb.append("oracle");              sb-->javaoracle        java 
+                                                         oracle
+42)
+final
+----
+->it ia a modifier applicable for classes,methods&variables.
+->if class declered as final then chaild class creation is not possible
+->if a method declered as final then overriding of that method is not possible
+->if variable declared as final,Then changing the value is not possible because it is constant
+
+finally
+------
+->it is a bloack always associated with try-catch to maintain clean-up code
+ which should be executed always irrespective of wheather exception raised or not raised and wheather handled or not handled
+
+finalize()
+--------
+->it is a method which should be executed by garbage collector before destory any object to perform clean up activities
+
+43)
+volatile keyword
+----------------
+.volatile is the modifier applicable only for variables but not for methods and classes.
+.if the value of variable keep on changing such type of variables we have to declere with volatile modifier
+.if a variable declered as volatile then for every thread a seperate local copy will be created
+.every intermediate modification performed by that thread will takes place in local copy instead of master copy
+.once the value got finalized just before terminating thread the master copy value will be updated with local state value
+
+44)
+
+Throw Vs Throws
+---------------
+throw
+-----
+1.by using throw keyword we can create exception manually and handover the object to JVM explecitly
+2.throw keyword always present inside method body
+3.Using throws keyword, we can declare both checked and unchecked exceptions. 	
+4.We are allowed to throw only one exception at a time i.e. we cannot throw multiple exceptions.
+
+note:
+----
+we can manually thow exception with the help of throw keyword 
+
+throws
+------
+1.we can use throws keyword to deligate the responsibility of exception handing to the caller method
+2.throws is used in the method declaration 
+3.the throws keyword can be used to propagate checked exceptions only.
+4.We can declare multiple exceptions using throws keyword that can be thrown by the method. 
+
+note:
+----
+
+45)
+
+HashMap vs LinkedHashMap
+
+HashMap                                                                                  
+.The underlying datastrecture is HashTable   
+.Insertin order is not preserved    
+.introduced in 1.2 version       
+
+ LinkedHashMap   
+.The underlying datastrecture is HashTable+LinkedList
+.Insertin order is preserved
+.introduced in 1.4 version
+
+TreeMap 
+.The Underlying Data Structure is Red -Black Tree.
+.Insertion Order is Not Preserved and it is Based on Some Sorting Order of Keys.
+
+46)
+
+HashSet Vs LinkedHaset 
+
+HashSet
+.the underlying datastrecture is HashTable
+.insertin order is not preserved
+.introduced in 1.2 version
+.HasSet Best choice for add remove and search operation
+
+LinkedHaset
+.the underlying datastrecture is combination of HashTable&LinkedList
+.insertin order is preserved
+.introduced in 1.4 version
+
+TreeSet
+.Underlying datastrecture is balenced tree.
+.Insertion order is not preserved and displays 
+ output in default natural sorting order 
+
+
+
+note:HashSet and LinkedHashSet allows heterogenious elements(differnt type data)
+     where as TreeSet allows homogenious elements(same type data to be inserted)
+
+47)List vs Set
+
+list                                  Set                                              
+.Insertion order is preserved        .Insertion order is not preserved
+.Duplicates are allowed              .Duplicates are not allowed
+
+48)
+
+equals and hashcode contract
+----------------------------
+.initially hashcode method will not retuen same hashode() for two objects of same data
+.initially equals() methods will not return true even the two objects have same data
+.so while you overriding hashcode method it should return the same hashcode for two objects have same data
+ and after overriding equals() method it should return true for the the two objects having same data
+.this is the contract between equal() and hashcode() mwthods while overriding.
+
+Defenation 2:
+-------------
+.The basic rule of the contract states that if two objects are equal to each other based on equals() method, 
+ then the hash code must be the same, but if the hash code is the same, then equals() can return false
+
+note:
+----
+2 object having the same hascode may or may not be equal
+2 object which are equal will always have the same hashcode
+
+purpose of hashing
+------------------
+.hashing technique is used for quick searches
+
+Some Important questions
+-----------------------
+what are class loaders in Java
+What is heap Memory and stack memory
+what are the thread states in java
+
+====================================================================================================================================================
+===========================================
+SINGLETON PROGRAM
+===========================================
+import java.io.*;
+public class Test implements Cloneable,Serializable
+{
+	private static Test t=null;
+	private Test(){}
+	public synchronized static Test getTest()
+	{
+	  if(t==null)
+	  {
+		t=new Test();
+	  }
+		return t;
+	}
+	public Test clone()
+	{
+	  return this;
+	}
+	public Object readResolve()
+	{ 
+	  return t;
+	}
+	public static void main(String[] args) 
+	{
+		Test t1=Test.getTest();
+		Test t2=Test.getTest();
+		System.out.println(t1==t2);
+	}
+}
+
+Implementation Rules:
+-------------------
+Private constructor to prevent external instantiation.
+Static method for accessing the instance.
+Private static variable to hold the instance.
+
+Optional Features:
+------------------
+Thread safety for multithreaded environments.
+Prevent cloning to maintain singleton property.
+Handle serialization to prevent multiple instances.
+
+==============================================
+Immutable class
+===========================================
+1.create the class as final
+2.make all the fields as private with final
+3.avoid setter methods 
+4.initialize all fields using constructors
+5.return a copy of the object but not return actual object
+
+Way 1
+
+public final class Employee  
+{    
+   final String pancardNumber; 
+
+   public Employee(String pancardNumber)  {    
+    this.pancardNumber=pancardNumber;    
+   }  
+   public String getPancardNumber(){    
+   return pancardNumber;    
+   }    
+}    
+
+public class ImmutableDemo  
+{  
+   public static void main(String ar[])  {  
+    Employee e = new Employee("ABC123");  
+    String s1 = e.getPancardNumber();  
+    System.out.println("Pancard Number: " + s1);  
+   }  
+}
+
+====================================
+Way 2
+
+final public class Test{
+  private int i;
+  Test(int i){
+    this.i=i;
+  }
+  public Test modify(int i){
+   if(this.i=i){
+     return this;
+   }
+   else{
+     return (new Test(i));
+   }
+  }
+ public static void main(String[] args){
+    Test t1=new Test(10);
+    Test t2=t1.modify(100);
+    Test t3=t1.modify(10);
+    Sop(t1==t2);false
+    Sop(t1==t3);true
+  }
+}
+==============================================
+CUSTOMISED SORTING PROGRAM
+==============================================
+customer detailes(id,name,salary) need to be insert through map according to sorting order by name
+Employee.java
+-------------
+package com.app;
+
+public class Employee
+{
+	private int empId;
+	private String empName;
+	private int salary;
+	public Employee(int empId, String empName, int salary) {
+		super();
+		this.empId = empId;
+		this.empName = empName;
+		this.salary = salary;
+	}
+	public Employee() {
+		super();
+	}
+	Setters & getter(override)
+        toString()(override)
+}
+
+package com.app;
+
+import java.util.Comparator;
+import java.util.Map;
+import java.util.TreeMap;
+
+public class Test 
+{
+   public static void main(String[] args) 
+   {
+	Employee e1=new Employee(101,"ajay",1000);
+	Employee e2=new Employee(102,"balu",2000);
+	Employee e3=new Employee(103,"chaithnya",3000);
+	Map m=new TreeMap(new MyComparator());
+	m.put(e1,1);/if we put e1 in string(" ") it shows erreor,because it never identifies values present in that object
+	m.put(e2,2);
+	m.put(e3,3);
+	System.out.println(m);
+	}
+}
+class MyComparator implements Comparator
+{
+
+	@Override
+	public int compare(Object o1, Object o2) 
+	{
+		Employee e1=(Employee)o1;
+		Employee e2=(Employee)o2;
+		 String s1=e1.getEmpName();
+		 String s2=e2.getEmpName();
+	         return s1.compareTo(s2);
+		/* here e1.compareTo(e2) will be executed only when we are implementing employee class
+                   with Comparator interface and we can write the logic for sortong
+		
+	/* natural sorting order according to employee id
+		 Integer i1=e1.getEmpId();
+		 Integer i2=e2.getEmpId();
+	         return i1.compareTo(i2);
+		
+	   reverse of natural sorting order according to employee id
+		 Integer i1=e1.getEmpId();
+		 Integer i2=e2.getEmpId();
+	         return i2.compareTo(i1);
+	       
+	   reverse of natural sorting order by employee name  
+	         String s1=e1.getEmpName();
+		 String s2=e2.getEmpName();
+	         return s2.compareTo(s1);
+	 */	     
+	}
+}
+============================================
+SORTING PROGRAM
+============================================
+package com.app;
+import java.util.*;
+public class Test 
+{
+	public static void main(String[] args) 
+	{
+		TreeSet ts=new TreeSet(new MyComparator());
+		ts.add(10);
+		ts.add(0);
+		ts.add(15);
+		ts.add(5);
+		ts.add(20);
+		System.out.println(ts);
+	}
+}
+class MyComparator implements Comparator
+{
+	public int compare(Object obj1,Object obj2)
+	{
+		Integer i1=(Integer)obj1;
+		Integer i2=(Integer)obj2;
+		if(i1<i2)
+			return +1;
+		else if(i1>i2)
+			return -1;
+		else 
+			return 0;
+	}
+};
+
+javac -d . Test.java
+
+java Test
+
+o/p:[20,15,10,5,0]
+====================================================
+CUSTOMISED EXCEPTION
+====================================================
+  class TooYoungException extends RuntimeException
+  {
+    TooYoungException(String s)
+    {
+      super(s);
+    }
+   
+  }
+ class TooOldException extends RuntimeException
+ {
+   TooOldException(String s)
+   {
+     super(s);
+   }
+ }
+ class Test
+ {
+  public static void main(String[] args)
+  {
+   int age=Integer.parseInt(args[0]);
+   if(age>60)
+   {
+     throw new TooOldException("your age is allready crossed");
+   }
+    else if(age<18)
+    {
+      throw new TooYoungException("please wait some more time");
+    }
+    else
+    {
+
+     System.out.println("you will get match details by mail");
+    }
+  }
+ }
+execution:javac Test.java
+          java Test  15
+   
+   output:Exception in thread "main" TooYoungException:your age is not sufficient to marrage 
+          at Test.main(Test.java:26)
+
+==============================================
+HashMap WORKING AND ITERATION
+==============================================
+import java.util.*;
+class Test 
+{
+	public static void main(String[] args) 
+	{
+		HashMap m=new HashMap();
+		m.put("chirangeevi",100);
+                m.put("balaiah",200);
+		m.put("nag",300);
+		m.put("venkey",400);
+		System.out.println(m);
+		System.out.println(m.put("chirangeevi",500));
+
+                Set s=m.keySet();
+		System.out.println(s);
+
+		Collection c=m.values();
+		System.out.println(c);
+
+		Set s1=m.entrySet();
+		System.out.println(s1);
+		Iterator itr=s1.iterator();
+		
+		while(itr.hasNext())
+		{
+			
+			Map.Entry m1=(Map.Entry)itr.next();
+			System.out.println(m1.getKey()+"---------"+m1.getValue());
+			if(m1.getKey().equals("nagarjuna"));
+			{
+				m1.setValue(1000);
+			}
+		}
+		System.out.println(m);
+	}
+}
+============================================
+DeadLock State
+===========================================
+.If a thread calls join() method on the same thread object then the program will be hanged.this is some thing like 
+  deadlock
+  class Test
+  {
+   public static void main(String[] args)
+   {
+    Thread.currentThread().join();
+   }
+  }
+.In this case thread has to wait infinite amount of time 
